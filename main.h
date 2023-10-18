@@ -21,5 +21,6 @@ int print_base16_upper_lower(va_list arg, char *representation);
 int loop_format(va_list arg, const char *string);
 int call_function_manager(char aux, va_list arg);
 int check_percent(int *flag, char aux);
+int switch(*string)
 
 #endif

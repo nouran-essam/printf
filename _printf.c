@@ -1,58 +1,40 @@
 #include "main.h"
 /**
  *_printf - printf
- * @format: the format specifier
- * Return: A total count of the characters printed
+ *@format: const char pointer
+ *Description: this functions implement some functions of printf
+ *Return: num of characteres printed
  */
 int _printf(const char *format, ...)
 {
-    va_list args;
-    va_start(args, format);
+	const char *string;
+	int cont = 0;
+	va_list arg;
 
-    int count = 0;
-    char c;
-    const char *s;
+	if (!format)
+		return (-1);
 
-    while (*format != '\0')
-    {
-        if (*format == '%')
-        {
-            format++;
-            switch (*format)
-            {
-                case 'c':
-                    c = (char)va_arg(args, int);
-                    putchar(c);
-                    count++;
-                    break;
-                case 's':
-                    s = va_arg(args, const char *);
-                    while (*s != '\0')
-                    {
-                        putchar(*s);
-                        s++;
-                        count++;
-                    }
-                    break;
-                case '%':
-                    putchar('%');
-                    count++;
-                    break;
-                default:
-                    putchar('%');
-                    putchar(*format);
-                    count += 2;
-                    break;
-            }
-        }
-        else
-        {
-            putchar(*format);
-            count++;
-        }
-        format++;
-    }
+	va_start(arg, format);
+	string = format;
 
-    va_end(args);
-    return count;
+	cont = loop_format(arg, string);
+
+	va_end(arg);
+	return (cont);
+}
+/**
+ *loop_format - loop format
+ *@arg: va_list arg
+ *@string: pointer from format
+ *Description: This function make loop tp string pointer
+ *Return: num of characteres printed
+ */
+#include <stdio.h>
+#include <stdarg.h>
+
+int loop_format(va_list arg, const char *string)
+{
+    int result = vprintf(string, arg);
+    va_end(arg);
+    return result;
 }
